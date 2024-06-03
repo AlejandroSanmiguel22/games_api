@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:games_api/presentation/screens/home/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class OnboardingOne extends StatelessWidget {
-  const OnboardingOne({super.key});
+class OnboardingThree extends StatelessWidget {
+  const OnboardingThree({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,7 @@ class OnboardingOne extends StatelessWidget {
       body: Column(
         children: [
           _buildHeader(),
-          _buildContent(),
+          _buildContent(context),
         ],
       ),
     );
@@ -22,9 +23,10 @@ class OnboardingOne extends StatelessWidget {
       child: Stack(
         children: [
           Container(
+            width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/imgOnboarding.png'),
+                image: AssetImage('assets/imgOnboarding_three.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,10 +52,11 @@ class OnboardingOne extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Expanded(
       flex: 3,
       child: Container(
+        width: double.infinity,
         color: Colors.black,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -65,7 +68,7 @@ class OnboardingOne extends StatelessWidget {
               const SizedBox(height: 20.0),
               _buildDescription(),
               const SizedBox(height: 45.0),
-              _buildButton(),
+              _buildButton(context),
               const SizedBox(height: 32.0),
             ],
           ),
@@ -76,7 +79,7 @@ class OnboardingOne extends StatelessWidget {
 
   Widget _buildTitle() {
     return Text(
-      "Conoce los mejores \njuegos",
+      "Comienza ahora !!",
       style: GoogleFonts.dmSans(
         fontSize: 35,
         color: Colors.white,
@@ -88,7 +91,7 @@ class OnboardingOne extends StatelessWidget {
 
   Widget _buildDescription() {
     return Text(
-      "Explora una amplia variedad de \njuegos disponibles en todas las plataformas. Descubre nuevas aventuras hoy mismo.",
+      "Bienvenido a la app que \nte llevará al siguiente nivel en tus \njuegos favoritos.",
       style: GoogleFonts.inter(
         fontSize: 20,
         color: const Color.fromRGBO(179, 176, 184, 1),
@@ -97,19 +100,31 @@ class OnboardingOne extends StatelessWidget {
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromRGBO(149, 150, 153, 1),
+        backgroundColor: const Color.fromRGBO(75, 135, 255, 1),
         foregroundColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 90.0, vertical: 20.0),
       ),
-      child: const Icon(Icons.arrow_forward, color: Colors.black),
+      child: Text(
+        'Vamos !',
+        style: GoogleFonts.inter(
+          fontSize: 20,
+          color: const Color(0xF8FFFFFF),
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
-
