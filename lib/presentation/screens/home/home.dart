@@ -1,6 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:games_api/presentation/screens/favorite/favorite.dart';
+import 'package:games_api/presentation/screens/search/search.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
@@ -148,22 +151,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    return CurvedNavigationBar(
-      backgroundColor: const Color(0xFF1F1F1F),
-      color: const Color(0xFF333333),
-      buttonBackgroundColor: Colors.blue,
-      height: 60,
-      items: const <Widget>[
-        Icon(Icons.home, size: 30, color: Colors.white),
-        Icon(Icons.favorite, size: 30, color: Colors.white),
-        Icon(Icons.message, size: 30, color: Colors.white),
-        Icon(Icons.local_cafe, size: 30, color: Colors.white),
-      ],
-      onTap: (index) {
-        
-      },
-    );
-  }
+ Widget _buildBottomNavigationBar(BuildContext context) {
+  return CurvedNavigationBar(
+    backgroundColor: const Color(0xFF1F1F1F),
+    color: const Color(0xFF333333),
+    buttonBackgroundColor: Colors.blue,
+    height: 60,
+    items: const <Widget>[
+      Icon(Icons.home, size: 30, color: Colors.white),
+      Icon(Icons.favorite, size: 30, color: Colors.white),
+      Icon(Icons.message, size: 30, color: Colors.white),
+      Icon(Icons.local_cafe, size: 30, color: Colors.white),
+    ],
+    onTap: (index) {
+      if (index == 1) { 
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FavoritePage()),
+        );
+      } else if (index == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchScreen()),
+        );
+      }
+    },
+  );
 }
-
+}
