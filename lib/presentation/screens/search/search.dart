@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:games_api/presentation/screens/favorite/favorite.dart';
+import 'package:games_api/presentation/screens/home/home.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -115,15 +116,20 @@ class _SearchScreenState extends State<SearchScreen> {
         Icon(Icons.local_cafe, size: 30, color: Colors.white),
       ],
       onTap: (index) {
-        if (index == 1) {
+        if (index == 0) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FavoritePage()),
+            MaterialPageRoute(builder: (context) => HomeScreen()),
           );
-        } else if (index == 2) {
+        } else if (index == 1) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchScreen()),
+            MaterialPageRoute(builder: (context) => const FavoritePage()),
+          );
+        }else if(index == 2){
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SearchScreen()),
           );
         }
       },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:games_api/presentation/screens/favorite/favorite.dart';
 import 'package:games_api/presentation/screens/search/search.dart';
-
+import 'package:games_api/presentation/screens/aboutGame/aboutGame.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 25.0),
               _buildTabs(),
               const SizedBox(height: 80.0),
-              _buildGameCardList(),
+              _buildGameCardList(context),
             ],
           ),
         ),
@@ -92,90 +92,105 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGameCardList() {
+  Widget _buildGameCardList(BuildContext context) {
     return SizedBox(
       height: 396, // Especificar la altura de la lista
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          _buildCard('assets/imgOnboarding.png', 'Fortnite'),
-          _buildCard('assets/imgOnboarding_two.png', 'Apex Legends'),
-          _buildCard('assets/imgOnboarding_three.png', 'Valorant'),
+          _buildCard(context, 'assets/imgOnboarding.png', 'Fortnite'),
+          _buildCard(context, 'assets/imgOnboarding_two.png', 'Apex Legends'),
+          _buildCard(context, 'assets/imgOnboarding_three.png', 'Valorant'),
         ],
       ),
     );
   }
 
-  Widget _buildCard(String imagePath, String title) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      width: 292,
-      height: 396,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(65.0),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
+  Widget _buildCard(BuildContext context, String imagePath, String title) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AboutScreen(title: title, imagePath: imagePath),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        width: 292,
+        height: 396,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(65.0),
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 16.0,
-            left: 16.0,
-            right: 16.0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(26.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.dmSans(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 16.0,
+              left: 16.0,
+              right: 16.0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(26.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.dmSans(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const Icon(Icons.arrow_forward, color: Colors.white),
-                ],
+                    const Icon(Icons.arrow_forward, color: Colors.white),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
- Widget _buildBottomNavigationBar(BuildContext context) {
-  return CurvedNavigationBar(
-    backgroundColor: const Color(0xFF1F1F1F),
-    color: const Color(0xFF333333),
-    buttonBackgroundColor: Colors.blue,
-    height: 60,
-    items: const <Widget>[
-      Icon(Icons.home, size: 30, color: Colors.white),
-      Icon(Icons.favorite, size: 30, color: Colors.white),
-      Icon(Icons.message, size: 30, color: Colors.white),
-      Icon(Icons.local_cafe, size: 30, color: Colors.white),
-    ],
-    onTap: (index) {
-      if (index == 1) { 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FavoritePage()),
-        );
-      } else if (index == 2) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SearchScreen()),
-        );
-      }
-    },
-  );
-}
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return CurvedNavigationBar(
+      backgroundColor: const Color(0xFF1F1F1F),
+      color: const Color(0xFF333333),
+      buttonBackgroundColor: Colors.blue,
+      height: 60,
+      items: const <Widget>[
+        Icon(Icons.home, size: 30, color: Colors.white),
+        Icon(Icons.favorite, size: 30, color: Colors.white),
+        Icon(Icons.message, size: 30, color: Colors.white),
+        Icon(Icons.local_cafe, size: 30, color: Colors.white),
+      ],
+      onTap: (index) {
+        if (index == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        } else if (index == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const FavoritePage()),
+          );
+        }else if(index == 2){
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SearchScreen()),
+          );
+        }
+      },
+    );
+  }
 }
